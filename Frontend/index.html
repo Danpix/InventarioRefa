@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Inventario - Refaccionaria</title>
+    <link rel="stylesheet" href="Syles/Style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"></path>
+                    <path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"></path>
+                    <path d="M12 3v6"></path>
+                </svg>
+                <h1>Sistema de Inventario - Refaccionaria</h1>
+            </div>
+            <div class="header-buttons">
+                <button class="btn btn-outline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                        <circle cx="8" cy="21" r="1"></circle>
+                        <circle cx="19" cy="21" r="1"></circle>
+                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                    </svg>
+                    Ventas
+                </button>
+                <button class="btn btn-outline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                        <path d="M3 3v18h18"></path>
+                        <path d="M18 17V9"></path>
+                        <path d="M13 17V5"></path>
+                        <path d="M8 17v-3"></path>
+                    </svg>
+                    Reportes
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="stats-container">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Inventario Total</h3>
+                    <p>Productos registrados</p>
+                </div>
+                <div class="card-content">
+                    <div class="stat-value" id="total-inventory">0</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Productos con Stock Bajo</h3>
+                    <p>Menos de 10 unidades</p>
+                </div>
+                <div class="card-content">
+                    <div class="stat-value" id="low-stock">0</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Valor del Inventario</h3>
+                    <p>Precio total</p>
+                </div>
+                <div class="card-content">
+                    <div class="stat-value" id="inventory-value">$0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="inventory-section">
+                <div class="controls">
+                    <div class="search-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </svg>
+                        <input type="search" id="search-input" placeholder="Buscar por nombre, código o categoría...">
+                    </div>
+
+                    <div class="filter-buttons">
+                        <button class="btn btn-outline" id="high-sales-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                                <path d="m5 12 7-7 7 7"></path>
+                                <path d="M12 19V5"></path>
+                            </svg>
+                            Ventas Altas
+                        </button>
+                        <button class="btn btn-outline" id="low-sales-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                                <path d="M12 5v14"></path>
+                                <path d="m19 12-7 7-7-7"></path>
+                            </svg>
+                            Ventas Bajas
+                        </button>
+                        <button class="btn btn-primary" id="add-product-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 8v8"></path>
+                                <path d="M8 12h8"></path>
+                            </svg>
+                            Nuevo Producto
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th class="text-right">Stock</th>
+                                <th class="text-right">Precio</th>
+                                <th class="text-right">Ventas</th>
+                                <th class="text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-body">
+                            <!-- Datos de la tabla se cargarán con JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Productos Más Vendidos</h3>
+                        <p>Top 3 productos con mayores ventas</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="top-sellers" id="top-sellers-list">
+                            <!-- Top sellers se cargarán con JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Stock Bajo</h3>
+                        <p>Productos que necesitan reabastecimiento</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="low-stock-list" id="low-stock-list">
+                            <!-- Low stock items se cargarán con JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para agregar nuevo producto -->
+    <div id="add-product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Agregar Nuevo Producto</h2>
+                <p>Ingrese los detalles del nuevo producto para el inventario.</p>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="add-product-form">
+                    <div class="form-group">
+                        <label for="code">Código</label>
+                        <input type="text" id="code" name="code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Categoría</label>
+                        <input type="text" id="category" name="category" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="stock">Stock</label>
+                        <input type="number" id="stock" name="stock" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Precio</label>
+                        <input type="number" id="price" name="price" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Guardar Producto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="JS/Main.js"></script>
+</body>
+</html>
